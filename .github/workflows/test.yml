@@ -16,3 +16,5 @@ jobs:
           location: us-central1
           credentials: ${{ secrets.gcp_credentials }}
           use_internal_ip: true
+      - id: get-nodes
+        run: kubectl get nodes
