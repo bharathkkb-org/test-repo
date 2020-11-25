@@ -1,0 +1,18 @@
+
+name: get private cluster creds
+
+on: [push, pull_request]
+
+jobs:
+  run:
+    name: test
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@main
+        with:
+          cluster_name: prod-cluster
+          location: us-central1
+          credentials: ${{ secrets.gcp_credentials }}
+          use_internal_ip: true
