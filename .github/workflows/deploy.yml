@@ -35,7 +35,7 @@ jobs:
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@master
       with:
-        service_account_key: ${{ secrets.SA_KEY }}
+        service_account_key: ${{ secrets.SA_KEY_JSON }}
         project_id: ${{ secrets.GKE_PROJECT }}
         export_default_credentials: true
 
@@ -69,7 +69,7 @@ jobs:
       with:
         cluster_name: prod-cluster
         location: us-central1
-        credentials: ${{ secrets.gcp_credentials }}
+        credentials: ${{ secrets.SA_KEY_JSON }}
         use_internal_ip: true
         # Set up kustomize
     - name: Set up Kustomize
