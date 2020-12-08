@@ -21,7 +21,8 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  IMAGE: hello
+  IMAGE: helloworld-gke
+  DEPLOYMENT_NAME: helloworld-gke
 
 jobs:
   build-publish-image:
