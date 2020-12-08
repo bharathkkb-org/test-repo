@@ -1,1 +1,1 @@
-# test-repo
+# sample-app
