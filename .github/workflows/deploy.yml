@@ -56,7 +56,7 @@ jobs:
 
 
   deploy-private-gke:
-    name: Build and publish image
+    name: Deploy to private cluster
     runs-on: self-hosted
     needs: [build-publish-image]
 
