@@ -54,7 +54,7 @@ jobs:
       with:
         route: POST /repos/:repository/deployments/:deployment/statuses
         repository: ${{ github.repository }}
-        deployment: ${{ create_deployment.outputs.deployment-id }}
+        deployment: ${{ fromJson( steps.create_deployment.outputs.data ).id }}
         environment: dev
         auto_merge: false
         state: in_progress
