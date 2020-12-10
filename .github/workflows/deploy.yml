@@ -34,35 +34,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: override env
-      if: github.event_name != 'pull_request'
-      run: |
-        echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
     - name: Checkout
       uses: actions/checkout@v2
-
-    - uses: chrnorm/deployment-action@releases/v1
-      name: Create GitHub deployment
-      id: deployment
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        environment: ${{ env.DEPLOY_ENV }}
-
-
-    - name: Update deployment status (in prog)
-      uses: chrnorm/deployment-status@releases/v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        state: "in_progress"
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-
-    - name: Update deployment status (success)
-      uses: chrnorm/deployment-status@releases/v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-        state: "success"
-        environment_url: http://my-app-url.com
 
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@master
@@ -93,6 +66,32 @@ jobs:
     needs: [build-publish-image]
 
     steps:
+    - name: override env
+      if: github.event_name != 'pull_request'
+      run: |
+        echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+    - uses: chrnorm/deployment-action@releases/v1
+      name: Create GitHub deployment
+      id: deployment
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        environment: ${{ env.DEPLOY_ENV }}
+
+
+    - name: Update deployment status (in prog)
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        state: "in_progress"
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+    - name: Update deployment status (success)
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+        state: "success"
+        environment_url: http://my-app-url.com
     - name: Checkout
       uses: actions/checkout@v2
 
