@@ -111,7 +111,7 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-        kubectl apply -f ns.yaml
+        kubectl apply -f manifests/ns.yaml
         ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA
         ./kustomize edit set namespace $DEPLOY_ENV
         ./kustomize build . | kubectl apply -f -
