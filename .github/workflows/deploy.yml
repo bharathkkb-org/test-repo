@@ -40,14 +40,14 @@ jobs:
       name: Create GitHub deployment
       id: deployment
       with:
-        token: "${{ github.token }}"
+        token: ${{ secrets.BOT_PAT }}
         target_url: http://my-app-url.com
         environment: production
 
     - name: Update deployment status (in prog)
       uses: chrnorm/deployment-status@releases/v1
       with:
-        token: "${{ github.token }}"
+        token: ${{ secrets.BOT_PAT }}
         target_url: http://my-app-url.com
         state: "in_progress"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
@@ -55,7 +55,7 @@ jobs:
     - name: Update deployment status (success)
       uses: chrnorm/deployment-status@releases/v1
       with:
-        token: "${{ github.token }}"
+        token: ${{ secrets.BOT_PAT }}
         target_url: http://my-app-url.com
         state: "success"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
