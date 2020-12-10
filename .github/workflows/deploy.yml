@@ -52,6 +52,14 @@ jobs:
         state: "in_progress"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
+    - name: Update deployment status (success)
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: "${{ github.token }}"
+        target_url: http://my-app-url.com
+        state: "success"
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@master
       with:
