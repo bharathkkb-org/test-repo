@@ -71,10 +71,9 @@ jobs:
 
       - name: Set up Kustomize
         run: |
-          curl -sfLo kustomize
-          https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-
+          curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
           chmod u+x ./kustomize
+          
       - name: Deploy
         run: |
           kubectl apply -f manifests/ns.yaml
@@ -103,7 +102,7 @@ jobs:
           deployment_id: '${{ steps.deployment.outputs.deployment_id }}'
           state: success
           environment_url: 'http://${{ env.DEPLOY_IP }}'
-          
+
       - name: Update deployment status (failure)
         if: failure()
         uses: chrnorm/deployment-status@releases/v1
