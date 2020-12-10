@@ -84,14 +84,6 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         state: "in_progress"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-
-    - name: Update deployment status (success)
-      uses: chrnorm/deployment-status@releases/v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-        state: "success"
-        environment_url: http://my-app-url.com
     - name: Checkout
       uses: actions/checkout@v2
 
@@ -117,3 +109,12 @@ jobs:
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status -n $DEPLOY_ENV deployment/$DEPLOYMENT_NAME
         kubectl get services -n $DEPLOY_ENV -o wide
+        DEPLOY_IP=$(kubectl get services -n prod hello --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
+        echo "DEPLOY_IP=$DEPLOY_IP" >> $GITHUB_ENV
+    - name: Update deployment status (success)
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+        state: "success"
+        environment_url: http://${{ env.DEPLOY_IP }}
