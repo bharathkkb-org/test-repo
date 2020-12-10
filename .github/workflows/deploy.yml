@@ -47,7 +47,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         environment: ${{ env.DEPLOY_ENV }}
-        target_url: http://my-app-url.com
+
 
     - name: Update deployment status (in prog)
       uses: chrnorm/deployment-status@releases/v1
@@ -60,7 +60,8 @@ jobs:
       uses: chrnorm/deployment-status@releases/v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        target_url: http://my-app-url.com
+        state: "success"
+        environment_url: http://my-app-url.com
 
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@master
