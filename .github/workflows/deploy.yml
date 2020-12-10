@@ -18,6 +18,9 @@ on:
   push:
     branches:
     - main
+  pull_request:
+    branches:
+      - main
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -39,7 +42,7 @@ jobs:
       with:
         route: POST /repos/:repository/deployments
         repository: ${{ github.repository }}
-        ref: ${{ fromJson(steps.get_pull_request_ref.outputs.data).head.ref }}
+        ref: ${{ github.ref }}
         environment: dev
         auto_merge: false
       env:
