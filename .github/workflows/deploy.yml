@@ -26,6 +26,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   IMAGE: helloworld-gke
   DEPLOYMENT_NAME: helloworld-gke
+  DEPLOY_ENV: 'dev'
 
 jobs:
   build-publish-image:
@@ -33,8 +34,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: test
-      run: echo ${{github.event_name}}
+    - name: override env
+      if: github.event_name != "pull_request"
+      run: |
+      echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
     - name: Checkout
       uses: actions/checkout@v2
 
@@ -43,7 +46,7 @@ jobs:
       id: deployment
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        environment: dev
+        environment: env.DEPLOY_ENV
 
     - name: Update deployment status (in prog)
       uses: chrnorm/deployment-status@releases/v1
