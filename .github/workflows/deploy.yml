@@ -47,6 +47,19 @@ jobs:
         auto_merge: false
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  
+    - name: in progress deployment
+      id: update_deployment
+      uses: octokit/request-action@v2.x
+      with:
+        route: POST /repos/:repository/deployments/:deployment/statuses
+        repository: ${{ github.repository }}
+        deployment: ${{ create_deployment.outputs.deployment-id }}
+        environment: dev
+        auto_merge: false
+        state: in_progress
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@master
