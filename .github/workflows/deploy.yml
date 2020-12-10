@@ -61,8 +61,6 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         target_url: http://my-app-url.com
-        state: "success"
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@master
