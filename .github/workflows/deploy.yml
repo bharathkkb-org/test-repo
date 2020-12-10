@@ -46,7 +46,7 @@ jobs:
       id: deployment
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        environment: env.DEPLOY_ENV
+        environment: ${{ env.DEPLOY_ENV }}
 
     - name: Update deployment status (in prog)
       uses: chrnorm/deployment-status@releases/v1
