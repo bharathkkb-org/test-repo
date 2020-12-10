@@ -37,7 +37,7 @@ jobs:
     - name: override env
       if: github.event_name != "pull_request"
       run: |
-      echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+        echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
     - name: Checkout
       uses: actions/checkout@v2
 
