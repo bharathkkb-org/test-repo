@@ -72,7 +72,8 @@ jobs:
         location: us-central1
         credentials: ${{ secrets.SA_KEY_JSON }}
         use_internal_ip: true
-        # Set up kustomize
+
+      # Set up kustomize
     - name: Set up Kustomize
       run: |-
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
